@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { landingConfig } from "@/config/landing";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { MainNav } from "@/components/main-nav";
 import { getAuthSession } from "@/lib/auth";
 
@@ -56,22 +56,28 @@ export default async function LandingLayout({ children }: LandingLayoutProps) {
             MediSync it Live
           </div>
           <div className="flex flex-wrap items center max-w-4xl py-8">
-            <div
+            <Link href="/login"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "px-4 rounded-none border-2 border-black mx-4 text-base font-semibold min-w-[9rem] hover:bg-red-500 hover:text-white cursor-pointer"
               )}
             >
-              Fun
-            </div>
-            <div
+              Manage Own Reports
+            </Link>
+            <Link href="/login"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "px-4 rounded-none border-2 border-black mx-4 text-base font-semibold min-w-[9rem] hover:bg-blue-500 hover:text-white cursor-pointer"
               )}
+              // onClick set isHealthcareProfessional=true and save to local storage and redirect to login page
+                onClick={
+                  () => {
+                    localStorage.setItem('isHealthcareProfessional', 'true');
+                  }
+                }
             >
-              Times
-            </div>
+              Manage Patients
+            </Link>
 
             
           </div>

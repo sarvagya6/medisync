@@ -41,6 +41,7 @@ export const authOptions: NextAuthOptions = {
         
               if (!dbUser) {
                 if (user) {
+                  token.isHealthcareProfessional = localStorage.getItem('isHealthcareProfessional')
                   token.id = user?.id
                 }
                 return token
