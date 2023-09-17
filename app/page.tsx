@@ -69,12 +69,6 @@ export default async function LandingLayout({ children }: LandingLayoutProps) {
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "px-4 rounded-none border-2 border-black mx-4 text-base font-semibold min-w-[9rem] hover:bg-blue-500 hover:text-white cursor-pointer"
               )}
-              // onClick set isHealthcareProfessional=true and save to local storage and redirect to login page
-                onClick={
-                  () => {
-                    localStorage.setItem('isHealthcareProfessional', 'true');
-                  }
-                }
             >
               Manage Patients
             </Link>

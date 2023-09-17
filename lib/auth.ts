@@ -28,6 +28,10 @@ export const authOptions: NextAuthOptions = {
                   session.user.name = token.name
                   session.user.email = token.email
                   session.user.image = token.picture
+                  session.user.isHealthcareProfessional = token.isHealthcareProfessional
+
+                  console.log('session.user: ', session.user);
+                  
                 }
           
                 return session
@@ -37,22 +41,36 @@ export const authOptions: NextAuthOptions = {
                 where: {
                   email: token.email,
                 },
-              })
+              }
+              
+              )
         
-              if (!dbUser) {
-                if (user) {
-                  token.isHealthcareProfessional = localStorage.getItem('isHealthcareProfessional')
-                  token.id = user?.id
+              if (!dbUser && user) {  // User doesn't exist in DB and is trying to sign up
+                // if ishealthcareprofessional = 1 from local storate, then isHealthcareProfessional = true
+                const isHealthcareProfessional = localStorage.isHealthcareProfessional == '1' ? true : false;
+                console.log('isHealthcareProfessional: ', isHealthcareProfessional);
+                // Create a new user in DB
+                await db.user.create({
+                  data: {
+                    email: user.email,
+                    name: user.name,
+                    image: user.image,
+                    isHealthcareProfessional: isHealthcareProfessional,
+                  }
+                });
+              }
+          
+              if (dbUser) {
+                return {
+                  id: dbUser.id,
+                  name: dbUser.name,
+                  email: dbUser.email,
+                  picture: dbUser.image,
+                  isHealthcareProfessional: dbUser.isHealthcareProfessional,
                 }
-                return token
               }
-        
-              return {
-                id: dbUser.id,
-                name: dbUser.name,
-                email: dbUser.email,
-                picture: dbUser.image,
-              }
+          
+              return token;
             },
 
             //TODO: Update for production use

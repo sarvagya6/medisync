@@ -70,5 +70,5 @@ model Case {
   healthcareProfessional  User?    @relation(fields: [healthcareProfessionalId], references: [id], name: "createdCases")
   relatedUserId           String   @map("relatedUserId")
   relatedUser             User     @relation(fields: [relatedUserId], references: [id], name: "relatedCases")
-  data                    Json     // Storing IPFS data as JSON
+  data                    Json?     // Storing IPFS data as JSON
 }
